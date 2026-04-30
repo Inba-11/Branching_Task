@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>V-Mart - Electronics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: white; 
+            color: black;
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0;
+            padding: 20px;
+            flex-grow: 1; 
+        }
+        header {
+            background-color: white; 
+            padding: 15px 0;
+            border-bottom: 1px solid white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            margin-left: 20px;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .header-icons {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .header-icons input {
+            padding: 8px;
+            border: 1px solid white;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .header-icons .cart-icon {
+            font-size: 20px;
+            color: black;
+            cursor: pointer;
+        }
+        .section-title {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color:black;
+        }
+        .electronics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: 250px; 
+            object-fit: contain; 
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .product-card h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+        .product-card .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .buy-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+    
+        }
+        .buy-button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: black;
+            color: white;
+            font-size: 14px;
+            border-top: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">V-Mart</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="electronics.html">Electronics</a></li>
+                <li><a href="fashion.html">Fashion</a></li>
+                <li><a href="Grocery.html">Grocery</a></li>
+                <li><a href="kids.html">Kids</a></li>
+            </ul>
+        </nav>
+        <div class="header-icons">
+            <input type="text" placeholder="Search products...">
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">fashion Deals</h2>
+        <div class="electronics-grid">
+            <div class="product-card">
+                <img src="Fashion/hoodie.jpeg" alt="hoodie">
+                <h3>Hoodie</h3>
+                <span class="price">₹2,999</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+            <div class="product-card">
+                <img src="Fashion/pants.jpeg" alt="pants">
+                <h3>Pants</h3>
+                <span class="price">₹1,999</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+            <div class="product-card">
+                <img src="Fashion/Nike.jpeg" alt="nike">
+                <h3>Nike</h3>
+                <span class="price">2,999</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+            <div class="product-card">
+                <img src="Fashion/Coats.jpeg" alt="coat">
+                <h3>Coat</h3>
+                <span class="coat">3,599</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p> E-Mart  All rights reserved  2026</p>
+    </footer>
+</body>
+</html> 
