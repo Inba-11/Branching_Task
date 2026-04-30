@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1 id="V">Rain Drop Creams</h1>
+        <img src="banner.jpg" alt="Ice Cream Banner" width="400" height="200">
+        <br><br>
+        <form  autocomplete="" action="success.html" method="Get">
+            Name:
+            <input type="text" name="name" required>
+            <br><br>
+            Email:
+            <input type="email" name="email" required>
+            <br><br>
+            Phone:
+            <input type="text" name="phone" required>
+            <br><br>
+            <h3>Choose Flavor</h3>
+            <img src="vanilla.jpg" alt="Vanilla" width="100">
+            <br>
+            <input type="radio" name="flavor" value="Vanilla">Vanilla
+            <br><br>
+            <img src="chocolate.jpg" alt="Chocolate" width="100" >
+            <br>
+            <input type="radio" name="flavor" value="Chocolate">Chocolate
+            <br><br>
+            <img src="strawberry.jpg" alt="strawberry" width="100" >
+            <br>
+            <input type="radio" name="flavor" value="strawberry">strawberry
+            <br><br>
+            choose size:
+            <input type="radio" name="size" value="small" >Small
+            <input type="radio" name="size" value="Medium">Medium
+            <input type="radio" name="size" value="Large">Large
+            <br><br>
+            Toppings:
+            <input type="checkbox" name="topping" value="Nuts">Nuts
+            <input type="checkbox" name="topping" value="choco chips">Choco chips
+            <br><br>
+            quantity:
+            <input type="number" name="quantity" min="1" max="10">
+            <br><br>
+            Delivery Date:
+            <input type="date" name="date">
+            <br><br>
+            Address:
+            <br>
+            <textarea name="address" rows="4" cols="30"></textarea>
+            <br><br>
+            <img src="Sale 30% off.jpg" alt="special offer" width="250" height="200">
+            <br><br>
+            <button type="submit">place order</button>
+        </form>
+    </body>
+</html>
