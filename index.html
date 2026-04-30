@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Form Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div id="nameBar">
+        <div id="nameBarInner">
+            <i class="fa-solid fa-pen-to-square" style="color:#4CAF50; font-size:18px;"></i>
+            <label for="formNameInput">Form Builder</label>
+            <span id="nameBarError"></span>
+        </div>
+    </div>
+    <button id="floatingSaveBtn" onclick="openSaveModal()" title="Save form name">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Save
+    </button>
+    <div id="saveNameOverlay">
+        <div id="saveNameModal">
+            <div id="saveNameModalHeader">
+                <i class="fa-solid fa-pen-to-square" style="color:#4CAF50;"></i>
+                <h3>Save Form</h3>
+            </div>
+            <label for="formNameInput">Form Name</label>
+            <input type="text" id="formNameInput" placeholder="Enter form name" maxlength="80" autocomplete="off" />
+            <span id="saveNameModalError"></span>
+            <div id="saveNameModalBtns">
+                <button id="saveNameConfirmBtn" onclick="confirmSaveName()">
+                    <i class="fa-solid fa-floppy-disk"></i> Save
+                </button>
+                <button id="saveNameCancelBtn" onclick="closeSaveModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainRow">
+        <div id="toolbox">
+            <p>Drag items</p>
+            <div class="toolItem" draggable="true" data-type="INPUT">Input</div>
+            <div class="toolItem" draggable="true" data-type="RADIO">Radio</div>
+            <div class="toolItem" draggable="true" data-type="CHECKBOX">CheckBox</div>
+            <div class="toolItem" draggable="true" data-type="SELECT">Select</div>
+        </div>
+        <div id="builderZone">
+            <h2>Form Builder</h2>
+            <p>Drop items here</p>
+            <div id="builderFields"></div>
+        </div>
+    </div>
+    <div id="modalOverlay">
+        <div id="modalBox">
+            <h3 id="modalTitle">Edit Field</h3>
+            <div id="typeSection" class="modalSection" style="display:none">
+                <div class="sectionTitle">Field Type</div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Input Type</label>
+                        <select id="mFieldType">
+                            <option value="TEXT">Text</option>
+                            <option value="EMAIL">Email</option>
+                            <option value="NUMBER">Number</option>
+                            <option value="TEXTAREA">TextArea</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modalSection">
+                <div class="sectionTitle"></div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Label</label>
+                        <input type="text" id="mLabel" placeholder="Enter label" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Placeholder</label>
+                        <input type="text" id="mPlaceholder" placeholder="Enter placeholder" />
+                    </div>
+                </div>
+            </div>
+            <div class="modalSection">
+                <div class="sectionTitle">Label Styles</div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Color</label>
+                        <input type="color" id="lsColor" value="#222222" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Background</label>
+                        <input type="color" id="lsBg" value="#ffffff" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Font Size (px)</label>
+                        <input type="number" id="lsSize" value="14" min="10" max="48" />
+                    </div>
+                </div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Padding</label>
+                        <input type="text" id="lsPadding" placeholder="e.g. 4px 8px" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Font Family</label>
+                        <select id="lsFont">
+                            <option value="inherit">Default</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modalSection">
+                <div class="sectionTitle">Input Styles</div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Color</label>
+                        <input type="color" id="isColor" value="#222222" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Background</label>
+                        <input type="color" id="isBg" value="#ffffff" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Border Color</label>
+                        <input type="color" id="isBorderColor" value="#cccccc" />
+                    </div>
+                </div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Font Size (px)</label>
+                        <input type="number" id="isSize" value="14" min="10" max="48" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Padding</label>
+                        <input type="text" id="isPadding" placeholder="e.g. 6px 10px" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Font Family</label>
+                        <select id="isFont">
+                            <option value="inherit">Default</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="charSection" class="modalSection" style="display:none">
+                <div class="sectionTitle">Character Constraints</div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Min Length</label>
+                        <input type="number" id="mMinChar" placeholder="None" min="0" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Max Length</label>
+                        <input type="number" id="mMaxChar" placeholder="None" min="1" />
+                    </div>
+                </div>
+            </div>
+            <div id="numSection" class="modalSection" style="display:none">
+                <div class="sectionTitle">Number Constraints</div>
+                <div class="modalRow">
+                    <div class="modalCol">
+                        <label>Min Value</label>
+                        <input type="number" id="mMinNum" placeholder="None" />
+                    </div>
+                    <div class="modalCol">
+                        <label>Max Value</label>
+                        <input type="number" id="mMaxNum" placeholder="None" />
+                    </div>
+                </div>
+            </div>
+            <div id="optionsSection" class="modalSection" style="display:none">
+                <div class="sectionTitle">Options</div>
+                <div id="optionsList"></div>
+                <button id="addOptionBtn" onclick="addNewOption()">+ Add Option</button>
+            </div>
+            <div class="modalSection">
+                <div class="sectionTitle">Behaviour</div>
+                <div class="checkRow">
+                    <input type="checkbox" id="mHideOnly" />
+                    <label for="mHideOnly">Hide only</label>
+                </div>
+                <div class="checkRow">
+                    <input type="checkbox" id="mReadOnly" />
+                    <label for="mReadOnly">Read only</label>
+                </div>
+                <div class="checkRow">
+                    <input type="checkbox" id="mRequired" />
+                    <label for="mRequired">Required</label>
+                </div>
+                <div class="checkRow" id="multiRow" style="display:none">
+                    <input type="checkbox" id="mCheckMultiple" />
+                    <label for="mCheckMultiple" style="display:inline;">Allow multiple</label>
+                </div>
+            </div>
+            <p id="modalError"></p>
+            <div id="modalButtons">
+                <button id="saveBtn" onclick="saveModal()">Save</button>
+                <button id="cancelBtn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

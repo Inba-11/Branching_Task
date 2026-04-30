@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Preview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #FFF4E6;
+            min-height: 100vh;
+            padding: 36px 20px 60px;
+            color: #1A1A2E;
+        }
+        .top-bar {
+            max-width: 680px;
+            margin: 0 auto 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .top-bar h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1A1A2E;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-bar h1 i {
+            color: #F6A05C;
+            font-size: 15px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FFE4BE;
+            color: #7A4010;
+            border: 1px solid #F6C897;
+            padding: 7px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 7px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .btn-back:hover {
+            background: #FFDDB3;
+            border-color: #F6A05C;
+        }
+
+        .btn-back i {
+            font-size: 12px;
+            color: #C8895A;
+        }
+        .form-card {
+            max-width: 680px;
+            margin: 0 auto;
+            background: #FFF8EE;
+            border: 1.5px solid #F6C897;
+        }
+
+        .form-header {
+            background: #FFF8EE;
+            padding: 20px 28px;
+            border-bottom: 1.5px solid #F6C897;
+        }
+
+        .form-header h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: 0;
+        }
+
+        .form-body {
+            padding: 28px;
+            background: #FFFAF3;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .preview-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .preview-field > label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7A4010;
+            letter-spacing: 0.01em;
+        }
+
+        .required-star {
+            color: #E8503A;
+            margin-left: 2px;
+        }
+
+        .preview-field input[type="text"],
+        .preview-field input[type="email"],
+        .preview-field input[type="number"],
+        .preview-field textarea,
+        .preview-field select {
+            width: 100%;
+            padding: 9px 13px;
+            border: 1px solid #F6C897;
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #1A1A2E;
+            outline: none;
+            background: #FFFAF3;
+            transition: border-color 0.18s, box-shadow 0.18s;
+        }
+
+        .preview-field input:focus,
+        .preview-field textarea:focus,
+        .preview-field select:focus {
+            border-color: #F6A05C;
+            box-shadow: 0 0 0 3px rgba(246, 160, 92, 0.18);
+            background: #fff;
+        }
+
+        .preview-field input[readonly],
+        .preview-field textarea[readonly],
+        .preview-field select[readonly] {
+            background: #FFE4BE;
+            color: #7A4010;
+            cursor: default;
+        }
+
+        .preview-field textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13.5px;
+            color: #1A1A2E;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+
+        .option-label input {
+            cursor: pointer;
+            accent-color: #F6A05C;
+            width: 15px;
+            height: 15px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0E9E8F;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+            letter-spacing: 0.03em;
+            transition: background 0.2s, transform 0.12s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(14, 158, 143, 0.25);
+        }
+
+        .submit-btn:hover {
+            background: #0A7A6E;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(14, 158, 143, 0.3);
+        }
+
+        .submit-btn:active { transform: translateY(0); }
+        .empty-state {
+            text-align: center;
+            padding: 52px 28px;
+        }
+
+        .empty-state i {
+            font-size: 38px;
+            margin-bottom: 14px;
+            display: block;
+            color: #F6C897;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #C8895A;
+        }
+
+        .ro-note {
+            font-size: 11px;
+            color: #C8895A;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .preview-field + .preview-field {
+            padding-top: 2px;
+        }
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1A1A2E;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 6px 24px rgba(26, 26, 46, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 9999;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast i { color: #4ade80; font-size: 16px; }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <h1>
+            Form Preview
+            <i class="fa-regular fa-eye"></i>
+        </h1>
+        <a href="home.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+    <div class="toast" id="successToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">submitted successfully</span>
+    </div>
+
+    <div class="form-card">
+        <div class="form-header">
+            <h2 id="formTitle">Loading…</h2>
+        </div>
+        <div class="form-body" id="formBody">
+        </div>
+    </div>
+
+    <script>
+        function escapeHtml(val) {
+            return String(val)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+        const params = new URLSearchParams(window.location.search);
+        const formId = params.get("formId");
+        let formName = "Untitled Form";
+        let fields = [];
+        if (formId) {
+            try {
+                const _forms = JSON.parse(localStorage.getItem("forms")) || [];
+                const _form = _forms.find(function (f) { return String(f.id) === String(formId); });
+                if (_form) {
+                    formName = _form.formName || "Untitled Form";
+                    fields = _form.components || [];
+                }
+            } catch (e) { fields = []; }
+        }
+        document.title = "Preview — " + formName;
+        document.getElementById("formTitle").textContent = formName;
+
+        const activeFields = fields.filter(function (f) { return !f.deletedAt && !f.properties.hideOnly && f.type !== "SUBMIT"; });
+        const body = document.getElementById("formBody");
+
+        if (activeFields.length === 0) {
+            body.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-regular fa-file-lines"></i>
+                <p>No fields have been added to this form yet.</p>
+            </div>`;
+        } else {
+            activeFields.forEach(function (field) {
+                const wrapper = document.createElement("div");
+                wrapper.className = "preview-field";
+                wrapper.innerHTML = buildPreviewField(field);
+                body.appendChild(wrapper);
+            });
+            const submitWrapper = document.createElement("div");
+            submitWrapper.className = "preview-field";
+            submitWrapper.innerHTML = '<button class="submit-btn" id="previewSubmitBtn" onclick="handlePreviewSubmit()">Submit</button>';
+            body.appendChild(submitWrapper);
+        }
+
+        function buildPreviewField(field) {
+            const p = field.properties;
+            const ro = p.readOnly ? "readonly" : "";
+            const ph = escapeHtml(p.placeholder || "");
+            const reqStar = p.isRequired
+                ? `<span class="required-star" title="Required">*</span>` : "";
+            const roNote = p.readOnly
+                ? `<span class="ro-note">(read-only)</span>` : "";
+            const label = `<label>${escapeHtml(p.label)}${reqStar} ${roNote}</label>`;
+
+            switch (field.type) {
+                case "TEXT":
+                    return `${label}
+                    <input type="text" placeholder="${ph}" ${ro}
+                        ${p.minChar ? `minlength="${p.minChar}"` : ""}
+                        ${p.maxChar ? `maxlength="${p.maxChar}"` : ""} />`;
+
+                case "EMAIL":
+                    return `${label}
+                    <input type="email" placeholder="${ph}" ${ro}
+                        ${p.minChar ? `minlength="${p.minChar}"` : ""}
+                        ${p.maxChar ? `maxlength="${p.maxChar}"` : ""} />`;
+
+                case "NUMBER":
+                    return `${label}
+                    <input type="number" placeholder="${ph}" ${ro}
+                        ${p.minValue !== null && p.minValue !== "" ? `min="${p.minValue}"` : ""}
+                        ${p.maxValue !== null && p.maxValue !== "" ? `max="${p.maxValue}"` : ""} />`;
+
+                case "TEXTAREA":
+                    return `${label}
+                    <textarea rows="4" placeholder="${ph}" ${ro}
+                        ${p.minChar ? `minlength="${p.minChar}"` : ""}
+                        ${p.maxChar ? `maxlength="${p.maxChar}"` : ""}></textarea>`;
+
+                case "SELECT": {
+                    let html = `${label}<select ${ro}>`;
+                    (p.options || []).forEach(function (o) {
+                        html += `<option>${escapeHtml(o)}</option>`;
+                    });
+                    return html + "</select>";
+                }
+
+                case "RADIO": {
+                    let html = label;
+                    (p.options || []).forEach(function (o) {
+                        html += `<label class="option-label">
+                        <input type="radio" name="radio_${field.id}" ${ro} />
+                        ${escapeHtml(o)}
+                    </label>`;
+                    });
+                    return html;
+                }
+
+                case "CHECKBOX": {
+                    let html = label;
+                    (p.options || []).forEach(function (o) {
+                        html += `<label class="option-label">
+                        <input type="checkbox" ${ro} />
+                        ${escapeHtml(o)}
+                    </label>`;
+                    });
+                    return html;
+                }
+
+                case "SUBMIT": {
+                    return `<button class="submit-btn" onclick="handlePreviewSubmit()">${escapeHtml(p.label)}</button>`;
+                }
+
+                default:
+                    return label;
+            }
+        }
+        function showToast(msg) {
+            const toast = document.getElementById("successToast");
+            document.getElementById("toastMsg").textContent = msg;
+            toast.classList.add("show");
+            setTimeout(function () { toast.classList.remove("show"); }, 3500);
+        }
+
+        function handlePreviewSubmit() {
+            const fieldEls = body.querySelectorAll(".preview-field");
+            let allOk = true;
+            let fieldIdx = 0;
+            const collectedData = {};
+
+            activeFields.forEach(function (field) {
+                const el = fieldEls[fieldIdx++];
+                if (!el) return;
+                const p = field.properties;
+                let value = null;
+                switch (field.type) {
+                    case "TEXT":
+                    case "EMAIL":
+                    case "NUMBER": {
+                        const inp = el.querySelector("input");
+                        value = inp ? inp.value.trim() : "";
+                        break;
+                    }
+                    case "TEXTAREA": {
+                        const ta = el.querySelector("textarea");
+                        value = ta ? ta.value.trim() : "";
+                        break;
+                    }
+                    case "SELECT": {
+                        const sel = el.querySelector("select");
+                        value = sel ? sel.value : "";
+                        break;
+                    }
+                    case "RADIO": {
+                        const checked = el.querySelector("input[type='radio']:checked");
+                        value = checked ? checked.parentElement.textContent.trim() : "";
+                        break;
+                    }
+                    case "CHECKBOX": {
+                        const checked = el.querySelectorAll("input[type='checkbox']:checked");
+                        value = Array.from(checked).map(function (cb) {
+                            return cb.parentElement.textContent.trim();
+                        });
+                        break;
+                    }
+                }
+                const isEmpty = value === null || value === "" ||
+                    (Array.isArray(value) && value.length === 0);
+                if (p.isRequired && isEmpty) {
+                    alert(`"${p.label}" is required.`);
+                    allOk = false;
+                    return;
+                }
+                collectedData[p.label] = value;
+            });
+            if (!allOk) return;
+            const SUBMIT_KEY = "submitted_forms";
+            let allSubmissions = [];
+            try { allSubmissions = JSON.parse(localStorage.getItem(SUBMIT_KEY)) || []; } catch (e) { }
+            let formEntry = allSubmissions.find(function (s) { return String(s.formId) === String(formId); });
+            if (!formEntry) {
+                formEntry = { formId: formId, formName: formName, submission: [] };
+                allSubmissions.push(formEntry);
+            }
+            const submissionValues = [];
+            activeFields.forEach(function (field) {
+                const label = field.properties.label;
+                if (collectedData.hasOwnProperty(label)) {
+                    submissionValues.push({
+                        componentId: label,
+                        value: collectedData[label]
+                    });
+                }
+            });
+
+            const now = new Date().toISOString();
+            formEntry.submission.push({
+                id: String(Date.now()),
+                createdAt: now,
+                updatedAt: now,
+                isDeleted: false,
+                submisionValues: submissionValues
+            });
+
+            localStorage.setItem(SUBMIT_KEY, JSON.stringify(allSubmissions));
+            const totalCount = formEntry.submission.filter(function (s) { return !s.isDeleted; }).length;
+            showToast("Form submitted and saved! (#" + totalCount + ")");
+            body.querySelectorAll("input:not([type='radio']):not([type='checkbox']):not([type='submit'])")
+                .forEach(function (i) { i.value = ""; });
+            body.querySelectorAll("textarea").forEach(function (t) { t.value = ""; });
+            body.querySelectorAll("input[type='radio'], input[type='checkbox']")
+                .forEach(function (c) { c.checked = false; });
+            body.querySelectorAll("select").forEach(function (s) { s.selectedIndex = 0; });
+        }
+    </script>
+</body>
+</html>
