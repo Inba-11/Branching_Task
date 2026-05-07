@@ -1,0 +1,122 @@
+body{
+    margin:0;
+    font-family: Arial;
+    background:#f4f6f9;
+}
+
+.main{
+    display:flex;
+}
+
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#f0f0f0;
+    padding:20px;
+}
+
+.logo{
+    color:#4a6cf7;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar li{
+    margin:15px 0;
+    color:#555;
+}
+
+.right{
+    flex:1;
+}
+
+.topbar{
+    background:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search{
+    width:300px;
+    padding:10px;
+    border-radius:20px;
+    border:1px solid #ccc;
+}
+
+.icons{
+    display:flex;
+    align-items:center;
+}
+
+.icon{
+    width:22px;
+    margin-right:15px;
+}
+
+.profile{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+}
+
+.cards{
+    display:flex;
+    flex-wrap:wrap;
+    padding:20px;
+}
+
+.card{
+    width:260px;
+    height:120px;
+    margin:10px;
+    padding:20px;
+    border-radius:10px;
+    color:white;
+}
+
+.card span{
+    font-size:12px;
+}
+
+.blue{
+    background:#4a6cf7;
+}
+
+.sky{
+    background:#6aaed6;
+}
+
+.purple{
+    background:#8a63d2;
+}
+
+.green{
+    background:#6fbf9f;
+}
+
+.bottom{
+    display:flex;
+    padding:20px;
+}
+
+.box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    margin-right:20px;
+}
+
+.large{
+    width:400px;
+    height:200px;
+}
+
+.small{
+    width:200px;
+    height:200px;
+}
