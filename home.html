@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Form Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #FFF4E6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .page-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-heading i {
+            font-size: 22px;
+            color: #F6A05C;
+        }
+
+        .page-heading h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: -0.01em;
+        }
+        #createFormBtn {
+            background-color: #0E9E8F;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.02em;
+            transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+            box-shadow: 0 2px 8px rgba(14, 158, 143, 0.25);
+        }
+
+        #createFormBtn:hover {
+            background-color: #0A7A6E;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(14, 158, 143, 0.3);
+        }
+
+        #createFormBtn:active { transform: translateY(0); }
+        .table-card {
+            background: #FFF8EE;
+            border: 1.5px solid #F6C897;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(246, 160, 92, 0.12);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background: #F6C897;
+            padding: 13px 18px;
+            text-align: left;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #7A4010;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            border: 1px solid #1A1A2E;
+        }
+
+        thead th:last-child { text-align: center; }
+
+        tbody td {
+            padding: 12px 18px;
+            font-size: 13px;
+            color: #1A1A2E;
+            border: 1px solid #1A1A2E;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover { background: #FFF0D9; }
+
+        .td-id {
+            font-size: 13px;
+            color: #1A1A2E;
+        }
+
+        .td-name {
+            font-weight: 600;
+            color: #1A1A2E;
+        }
+        .actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-delete,
+        .btn-edit,
+        .btn-preview,
+        .btn-submissions {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.15s, color 0.15s, transform 0.12s;
+            transform-origin: center;
+        }
+
+        .btn-delete:active,
+        .btn-edit:active,
+        .btn-preview:active,
+        .btn-submissions:active { transform: scale(0.9); }
+
+        .btn-delete      { background: #FFE0D6; color: #E8503A; }
+        .btn-delete:hover { background: #E8503A; color: #fff; }
+
+        .btn-edit        { background: #D0F4F0; color: #0A7A6E; }
+        .btn-edit:hover   { background: #0E9E8F; color: #fff; }
+
+        .btn-preview     { background: #FFE4BE; color: #7A4010; border: 1px solid #F6C897; }
+        .btn-preview:hover { background: #F6A05C; color: #fff; border-color: #F6A05C; }
+
+        .btn-submissions { background: #FFF0D9; color: #C8895A; border: 1px solid #F6C897; }
+        .btn-submissions:hover { background: #F6A05C; color: #1A1A2E; border-color: #F6A05C; }
+        .empty-row td {
+            padding: 48px 20px;
+            text-align: center;
+            color: #C8895A;
+            font-style: italic;
+            font-size: 14px;
+        }
+        .del-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 46, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInBg 0.18s ease;
+        }
+        .del-overlay.open { display: flex; }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .del-modal {
+            background: #FFF8EE;
+            border: 1.5px solid #F6C897;
+            border-radius: 14px;
+            padding: 32px 28px 24px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(246, 160, 92, 0.25);
+            animation: slideUp 0.2s ease;
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(22px); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+
+        .del-modal .del-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #FFE0D6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .del-modal .del-icon i {
+            font-size: 22px;
+            color: #E8503A;
+        }
+
+        .del-modal h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin-bottom: 8px;
+        }
+
+        .del-modal p {
+            font-size: 13px;
+            color: #7A4010;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .del-modal p strong {
+            color: #1A1A2E;
+            font-weight: 700;
+        }
+
+        .del-modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-cancel-del {
+            flex: 1;
+            padding: 9px 0;
+            border: 1px solid #F6C897;
+            background: #FFE4BE;
+            color: #7A4010;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-cancel-del:hover { background: #FFDDB3; }
+
+        .btn-confirm-del {
+            flex: 1;
+            padding: 9px 0;
+            border: none;
+            background: #E8503A;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-confirm-del:hover { background: #C73D28; }
+    </style>
+</head>
+
+<body>
+    <div class="del-overlay" id="deleteOverlay" onclick="onOverlayClick(event)">
+        <div class="del-modal" id="deleteModal">
+            <div class="del-icon"><i class="fa-solid fa-trash-can"></i></div>
+            <h3>Delete Form</h3>
+            <p>Are you sure you want to delete <strong id="deleteFormName"></strong>?<br>This action cannot be undone.</p>
+            <div class="del-modal-actions">
+                <button class="btn-cancel-del" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn-confirm-del" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-heading">
+                <h1>Form Manager</h1>
+            </div>
+            <button id="createFormBtn" onclick="createForm()">
+                <i class="fa-solid fa-plus"></i> Create Form
+            </button>
+        </div>
+        <div class="table-card">
+            <table id="formsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Form Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="formsBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const FORMS_KEY = "forms";
+
+        function getForms() {
+            try { return JSON.parse(localStorage.getItem(FORMS_KEY)) || []; }
+            catch (e) { return []; }
+        }
+
+        function saveForms(list) {
+            localStorage.setItem(FORMS_KEY, JSON.stringify(list));
+        }
+
+        function renderTable() {
+            const list = getForms();
+            const tbody = document.getElementById("formsBody");
+            tbody.innerHTML = "";
+
+            const activeForms = list.filter(function (form) { return !form.isDeleted; });
+
+            if (activeForms.length === 0) {
+                tbody.innerHTML = `<tr class="empty-row"><td colspan="3">No forms yet. Click "Create Form" to start.</td></tr>`;
+                return;
+            }
+
+            activeForms.forEach(function (form) {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="td-id">${escapeHtml(form.id)}</td>
+                    <td class="td-name">${escapeHtml(form.formName || "(Unnamed)")}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn-delete" title="Delete" onclick="deleteForm('${escapeHtml(form.id)}')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            <button class="btn-edit" title="Edit" onclick="editForm('${escapeHtml(form.id)}')">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn-preview" title="Preview" onclick="previewForm('${escapeHtml(form.id)}')">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-submissions" title="Submissions" onclick="viewSubmissions('${escapeHtml(form.id)}')">
+                                <i class="fa-solid fa-table-list"></i>
+                            </button>
+                        </div>
+                    </td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function escapeHtml(val) {
+            return String(val)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        let _pendingDeleteId = null;
+
+        function deleteForm(id) {
+            const list = getForms();
+            const form = list.find(function (f) { return String(f.id) === String(id); });
+            const name = (form && form.formName) ? form.formName : "(Unnamed)";
+            _pendingDeleteId = id;
+            document.getElementById("deleteFormName").textContent = "“" + name + "”";
+            document.getElementById("deleteOverlay").classList.add("open");
+        }
+
+        function closeDeleteModal() {
+            _pendingDeleteId = null;
+            document.getElementById("deleteOverlay").classList.remove("open");
+        }
+
+        function confirmDelete() {
+            if (!_pendingDeleteId) return;
+            const list = getForms();
+            const form = list.find(function (f) { return String(f.id) === String(_pendingDeleteId); });
+            if (form) {
+                form.isDeleted = true;
+                form.updatedAt = new Date().toISOString();
+                saveForms(list);
+            }
+            closeDeleteModal();
+            renderTable();
+        }
+
+        function onOverlayClick(e) {
+            if (e.target === document.getElementById("deleteOverlay")) closeDeleteModal();
+        }
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") closeDeleteModal();
+        });
+
+        function editForm(id) {
+            window.location.href = "index.html?formId=" + id;
+        }
+
+        function createForm() {
+            const now = new Date().toISOString();
+            const id = "form_" + Date.now();
+            const list = getForms();
+            list.push({
+                id: id,
+                formName: "",
+                components: [],
+                isDeleted: false,
+                createdAt: now,
+                updatedAt: now
+            });
+            saveForms(list);
+            window.location.href = "index.html?formId=" + id + "&isNew=true";
+        }
+
+        function previewForm(id) {
+            window.open("preview.html?formId=" + id, "_blank");
+        }
+
+        function viewSubmissions(id) {
+            window.location.href = "submissions.html?formId=" + id;
+        }
+
+        renderTable();
+    </script>
+</body>
+
+</html>

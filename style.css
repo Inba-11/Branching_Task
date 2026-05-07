@@ -1,0 +1,676 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: block;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #FFF4E6;
+    min-height: 100vh;
+}
+#nameBar {
+    display: none;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 2px solid #4CAF50;
+    padding: 10px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+#nameBarInner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 860px;
+}
+
+#nameBar label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+}
+#formNameInput {
+    flex: 1;
+    max-width: 320px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#formNameInput:focus {
+    border-color: #0E9E8F;
+}
+
+#formNameInput.input-error {
+    border-color: tomato;
+}
+#floatingSaveBtn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    background: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 7px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+}
+
+#floatingSaveBtn:hover {
+    background: #333333;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+#floatingSaveBtn:active {
+    transform: translateY(0);
+    background: #111111;
+}
+
+#nameBarError {
+    color: tomato;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+
+#mainRow {
+    display: flex;
+    gap: 16px;
+    padding: 70px 24px 24px 24px;
+    align-items: flex-start;
+}
+
+
+#toolbox {
+    width: 155px;
+    flex-shrink: 0;
+    background-color: #F6C897;
+    border: none;
+    padding: 16px 12px;
+    height: fit-content;
+    border-radius: 12px;
+    position: sticky;
+    top: 12px;
+}
+
+#toolbox p {
+    font-size: 11px;
+    color: #F6A05C;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+.toolItem {
+    width: 100%;
+    height: 52px;
+    margin-bottom: 8px;
+    border: 1.5px dashed #D4845A;
+    background-color: #F6A05C;
+    color: #2C1810;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12.5px;
+    cursor: grab;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+}
+
+.toolItem:hover {
+    background-color: #e8893a;
+    color: #FFDDB3;
+    border-color: #FFDDB3;
+}
+
+
+#builderZone {
+    flex: 1;
+    background-color: #FFF0D9;
+    border: 1.5px solid #F6C897;
+    padding: 20px;
+    min-height: 300px;
+    border-radius: 12px;
+}
+
+#builderZone h2 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: #1A1A2E;
+    font-weight: 700;
+}
+
+#builderZone>p {
+    font-size: 13px;
+    color: #C8895A;
+    margin-bottom: 16px;
+}
+
+#builderZone.dragOver {
+    background-color: #FFE4BE;
+    border-color: #F6A05C;
+}
+
+#builderFields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.fieldCard {
+    border: 1px solid #F6C897;
+    padding: 14px;
+    background-color: #FFF8EE;
+    border-radius: 10px;
+    transition: box-shadow 0.15s;
+}
+
+.fieldCard:hover {
+    box-shadow: 0 3px 14px rgba(246, 160, 92, 0.18);
+}
+
+.fieldCard input[type="text"],
+.fieldCard input[type="email"],
+.fieldCard input[type="number"],
+.fieldCard textarea,
+.fieldCard select {
+    padding: 6px 10px;
+    margin-top: 4px;
+    border: 1px solid #F6C897;
+    font-size: 14px;
+    border-radius: 6px;
+    background: #FFFAF3;
+    color: #1A1A2E;
+    outline: none;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.cardTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A1A2E;
+}
+
+.cardPreview {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.badge-hide {
+    background-color: #FFE0B2;
+    color: #BF5900;
+}
+
+.badge-ro {
+    background-color: #D0F4F0;
+    color: #0A6B62;
+}
+
+.hiddenNote {
+    font-size: 12px;
+    color: #C8895A;
+    font-style: italic;
+}
+
+.editBtn {
+    margin-top: 4px;
+    margin-right: 6px;
+    padding: 5px 14px;
+    background-color: #0E9E8F;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 12.5px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.15s;
+}
+
+.editBtn:hover {
+    background-color: #0A7A6E;
+}
+
+.deleteBtn {
+    margin-top: 4px;
+    padding: 5px 14px;
+    background-color: #E8503A;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 12.5px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.15s;
+}
+
+.deleteBtn:hover {
+    background-color: #C73D28;
+}
+
+#submitFormBtn {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background-color: #0A7A6E;
+    color: #1A1A2E;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    width: 100%;
+    border-radius: 8px;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+}
+
+#submitFormBtn:hover {
+    background-color: #E88A3A;
+}
+
+.optionLabel {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #1A1A2E;
+}
+
+.optionLabel input {
+    margin-right: 6px;
+    accent-color: #F6A05C;
+}
+
+
+#modalOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 26, 46, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+#modalBox {
+    background-color: #FFF8EE;
+    padding: 26px;
+    width: 460px;
+    border: 1.5px solid #F6C897;
+    border-radius: 14px;
+    max-height: 85%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    box-shadow: 0 10px 36px rgba(246, 160, 92, 0.2);
+}
+
+#modalBox h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: #1A1A2E;
+    font-weight: 700;
+    border-bottom: 1.5px solid #F6C897;
+    padding-bottom: 10px;
+}
+
+#modalBox label {
+    font-size: 12.5px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+    color: #7A4010;
+}
+
+.modalSection {
+    margin-bottom: 16px;
+}
+
+.sectionTitle {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #E8843A;
+    border-bottom: 1px solid #F6C897;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+}
+
+.modalRow {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.modalCol {
+    flex: 1;
+}
+
+.modalCol input[type="number"],
+.modalCol input[type="color"],
+.modalCol select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #F6C897;
+    font-size: 13px;
+    border-radius: 6px;
+    background: #FFFAF3;
+    color: #1A1A2E;
+}
+
+#mLabel,
+#mPlaceholder {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #F6C897;
+    font-size: 14px;
+    border-radius: 6px;
+    background: #FFFAF3;
+    color: #1A1A2E;
+    outline: none;
+}
+
+.checkRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #3D2B00;
+}
+
+.checkRow input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    accent-color: #F6A05C;
+}
+
+#optionsSection {
+    display: none;
+    margin-bottom: 14px;
+}
+
+.optionRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+}
+
+.optionInput {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #F6C897;
+    font-size: 13px;
+    border-radius: 6px;
+    background: #FFFAF3;
+    color: #1A1A2E;
+}
+
+.deleteOptionBtn {
+    background-color: #E8503A;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.deleteOptionBtn:hover {
+    background-color: #C73D28;
+}
+
+#addOptionBtn {
+    margin-top: 4px;
+    padding: 5px 14px;
+    background-color: #0E9E8F;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.15s;
+}
+
+#addOptionBtn:hover {
+    background-color: #0A7A6E;
+}
+
+#modalButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    border-top: 1.5px solid #F6C897;
+    padding-top: 14px;
+}
+
+#saveBtn {
+    padding: 7px 22px;
+    background-color: #F6A05C;
+    color: #1A1A2E;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: background 0.15s;
+}
+
+#saveBtn:hover {
+    background-color: #E88A3A;
+}
+
+#cancelBtn {
+    padding: 7px 22px;
+    background-color: #FFE4BE;
+    color: #7A4010;
+    border: 1px solid #F6C897;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+#cancelBtn:hover {
+    background-color: #FFDDB3;
+}
+
+#modalError {
+    color: #E8503A;
+    font-size: 13px;
+    min-height: 16px;
+    margin-top: 6px;
+}
+
+
+#saveNameOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    animation: overlayFadeIn 0.2s ease;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#saveNameModal {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px 28px 24px;
+    width: 380px;
+    max-width: 90vw;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+    animation: modalSlideUp 0.22s ease;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(24px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#saveNameModalHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#saveNameModalHeader h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+#saveNameModal>label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+#formNameInput {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    color: #1a1a1a;
+    background: #fafafa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#formNameInput:focus {
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+#formNameInput.input-error {
+    border-color: #e53935;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
+}
+
+#saveNameModalError {
+    display: block;
+    color: #e53935;
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 18px;
+    margin-top: 6px;
+}
+
+#saveNameModalBtns {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#saveNameConfirmBtn {
+    flex: 1;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: background 0.2s, transform 0.15s;
+}
+
+#saveNameConfirmBtn:hover {
+    background: #333;
+    transform: translateY(-1px);
+}
+
+#saveNameCancelBtn {
+    padding: 10px 20px;
+    background: #f2f2f2;
+    color: #555;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#saveNameCancelBtn:hover {
+    background: #e5e5e5;
+}
