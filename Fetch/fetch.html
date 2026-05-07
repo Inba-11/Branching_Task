@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Learning Fetch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table id="myTable" border="1">
+        <thead>
+            <tr>
+                <th><i class="fa-solid fa-hashtag"></i> ID</th>
+                <th><i class="fa-solid fa-user"></i> User</th>
+                <th><i class="fa-solid fa-comment"></i> Body</th>
+                <th><i class="fa-solid fa-heart"></i> Likes</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script>
+    fetch('https://dummyjson.com/comments')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            const tbody = document.getElementById('tbody');
+
+            for (let i = 0; i < data.comments.length; i++) {
+                const comment = data.comments[i];
+
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                td1.textContent = comment.id;
+                const td2 = document.createElement('td');
+                td2.textContent = comment.user.username;
+                const td3 = document.createElement('td');
+                td3.textContent = comment.body;
+                const td4 = document.createElement('td');
+                td4.textContent = comment.likes;
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tbody.appendChild(tr);
+            }
+        });
+</script>
+</body>
+
+</html>

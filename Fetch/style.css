@@ -1,0 +1,19 @@
+ h1 {
+        color: blue;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+    }
+    th{
+        background-color: blue;
+        color: white;
+        padding: 10px;
+        text-align: left;
+    }
+    td {
+        padding: 10px;
+    }
+    td {
+        border-bottom: 1px solid gray;
+    }
